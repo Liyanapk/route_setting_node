@@ -1,19 +1,24 @@
 import express from 'express';
-import routes from 'express';
+import dotenv from "dotenv"
+import router from './Routes/app_route.js';
+import bodyParser from "body-parser"
+dotenv.config()
 
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 5001
 
+app.use(bodyParser.json())
+app.use('/',router)
 
-app.use('/',routes)
+// Error handling middleware
+// app.use((err,req,res,next)=>{
+// console.log(err.stack);
+// res.json({ message: err.message });
 
-app.use((req, res) => {
-    res.status(404).send("404 Not Found"); 
-});
+// })
+  
 
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
-
-
