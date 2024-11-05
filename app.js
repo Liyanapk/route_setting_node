@@ -16,6 +16,9 @@ app.use('/',router)
 // res.json({ message: err.message });
 
 // })
+
+
+app.use(express.static('uploads'));
   
 
 

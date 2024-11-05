@@ -3,6 +3,8 @@ import { dirname, join } from "path";
 import { v4 as uuidv4 } from "uuid";
 import { fileURLToPath } from "url";
 
+import {uploadUser}  from "../middleware/multer.js";
+
 const filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(filename);
 const dataFile = join(__dirname, "../models/data.json");
@@ -35,19 +37,22 @@ export const getAllUser = (req, res, next) => {
 
 //post user
 export const postUser = (req, res,next) => {
-
-  console.log(req.file);
+  console.log(req.files);
+  
   try {
     const person = readData();
-  const newPerson = { id: uuidv4(), ...req.body };
+  const newPerson = { id: uuidv4(), ...req.body,uploadUser };
   person.push(newPerson);
   writeData(person);
   res.status(200).json(newPerson);
+
+ 
 
   } catch (error) {
     next(new Error("Something went wrong"));
     res.status(500).json({message:"Something went wrong"})
   }
+
 };
 
 
